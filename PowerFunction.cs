@@ -2,8 +2,10 @@ class PowerFunction
 {
     void Power(int number,int power)
     {
-        int multiplication;
-        multiplication=number*number*number;
+        int multiplication=1;
+        for(int i = 0; i <power ; i++){
+
+        multiplication*=number;}
         Console.WriteLine("multiplication of {0}^{1}:{2}",number,power,multiplication);
         
     }
@@ -17,4 +19,4 @@ class PowerFunction
         
         
     }
-}
+} 
