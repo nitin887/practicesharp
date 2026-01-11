@@ -6,17 +6,17 @@ class FibonacciSeries
     {
         int first=0;
         int second=1;
-        int nextTerm=0;
+        
+        
         int sequence=4;
-        for(int i = 2; i <sequence ; ++i) {
+        for(int i = 0; i <sequence ; ++i) {
+            Console.Write(first+" ");
            int  sum = first + second;
-            nextTerm  = sum;
-            
-
-          
-                    
+             first=second;
+             second=sum;
         }
-        Console.WriteLine("{0}+{1}+{2}",first,second,nextTerm);
+        Console.WriteLine();
+     
 
      
         
