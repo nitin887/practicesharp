@@ -13,11 +13,9 @@ class ReverseAnArray
         int end=arr.Length-1;
         Console.Write("rev array:");
         while (start < end)
-        { int temp =arr[start];
-          arr[start]=arr[end];
-          arr[end]=temp;
-          
-          end--;
+        {
+            (arr[end], arr[start]) = (arr[start], arr[end]);
+            end--;
           start++;
             
         }
