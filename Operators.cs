@@ -1,19 +1,14 @@
 /*
-Implement multiplication using only addition.
+Declare and initialize variables using different methods.
 */
 using System;
 
-class Operator
+class Operators
 {
-    static void Main(string[] args)
+  static  int x=10;
+    static void Main()
     {
-     int a=5;
-     int b=10;
-     int result=0;
-     for(int i = 1; i <=b ;i++)
-     {
-       result=a+result;  
+        int x=3;
+        Console.WriteLine("x:"+x);
     }
-    Console.WriteLine("Multiplication of 5 using addition is: " + result);
     }
-}
