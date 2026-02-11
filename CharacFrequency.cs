@@ -4,23 +4,17 @@ using System.Collections.Generic;
 class CharacFrequency
 {
     static void Main(string[] args)
-    {
-        // use command-line input if provided, otherwise default to "hello"
-        string text = args.Length > 0 ? string.Join(" ", args) : "hello";
-
+    {//h e l l o
+      // 1   
+        string text = "hello";
         var pairs = new Dictionary<char, int>();
+
         foreach (char c in text)
         {
-            if (char.IsWhiteSpace(c))
-                continue;
-
-            // case-insensitive count
-            char key = char.ToLowerInvariant(c);
-
-            if (pairs.ContainsKey(key))
-                pairs[key]++;
+            if (pairs.ContainsKey(c))
+                pairs[c]++;
             else
-                pairs[key] = 1;
+                pairs[c] = 1;
         }
 
         foreach (var item in pairs)
