@@ -1,0 +1,2 @@
+Sample file content
+This file was created by the program.
