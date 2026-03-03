@@ -5,7 +5,7 @@ class Test
 {
 	static void Main()
 	{
-		List<int> list = new List<int>();
+		List<int> list = [];
 
 		if (list.Count > 0)
 			Console.WriteLine(list[0]);
