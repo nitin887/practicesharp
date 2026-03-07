@@ -7,17 +7,7 @@ Delegates • Predicate • Action • Func • Events • Anonymous Methods •
 🔹 BASIC LEVEL
 
 
-2️⃣ Predicate Delegate – Even Number Filter
 
-Given a list of integers:
-
-Requirements:
-
-Use Predicate<int>
-
-Filter even numbers
-
-Use List<T>.FindAll()
 
 3️⃣ Action Delegate – Logger
 
@@ -204,7 +194,31 @@ class Delegates
     static void Main(string[] args)
     {
         Console.WriteLine("enter the two numbers:");
+        int a = Convert.ToInt32(Console.ReadLine());
+        int b = Convert.ToInt32(Console.ReadLine());
 
+        Operation operation = Addition;
+        Console.WriteLine(operation(a, b));
+        Operation operation1 = Subtraction;
+        Console.WriteLine(operation1(a, b));
+        Operation operation2 = Multiplication;
+        Console.WriteLine(operation2(a, b));
+
+
+    }
+    public delegate int Operation(int a, int b);
+    public static int Addition(int a, int b)
+    {
+        return a + b;
+
+    }
+    public static int Subtraction(int a, int b)
+    {
+        return a - b;
+    }
+    public static int Multiplication(int a, int b)
+    {
+        return a * b;
     }
 
 }
