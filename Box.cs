@@ -14,5 +14,25 @@ string
 */
 class Box<T>
 {
-    
+    private T Value;
+
+    public void SetValue(T item)
+    {
+        Value = item;
+    }
+    public T GetValue()
+    {
+        return Value;
+
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        Box<int> box = new Box<int>();
+        box.SetValue(100);
+        Console.WriteLine(box.GetValue());
+    }
+
 }
