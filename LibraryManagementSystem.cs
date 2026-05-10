@@ -11,170 +11,130 @@ Queue → Waiting list
 Stack → Recently returned books
 
 */
-using System.Security.AccessControl;
-using Microsoft.VisualBasic;
+using System;
+using System.Collections.Generic;
 
 class Library
 {
-    public bool IsBorrowed;
-
-    public int Quantity;
     public int Id;
     public string BookName;
-
     public string AuthorName;
+    public int Quantity;
 
-    public Library(int id, string bookName, string authorName, int quantity, bool isBorrowed)
+    public Library(int id, string bookName, string authorName, int quantity)
     {
-
         Id = id;
         BookName = bookName;
         AuthorName = authorName;
         Quantity = quantity;
-        IsBorrowed = isBorrowed;
-
-    }
-    public Library(string bookName, string authorName, int quantity, bool isBorrowed)
-    {
-        BookName = bookName;
-        AuthorName = authorName;
-        Quantity = quantity;
-        IsBorrowed = isBorrowed;
-    }
-    public Library()
-    {
-
     }
 }
-class LibraryMangementSysytem
+
+class LibraryManagementSystem
 {
-    Dictionary<int, Library> keyValuePairs = new Dictionary<int, Library>();
-    Library library1 = new Library(id, bookName, authorName, quantity, isBorrowed);
+    Dictionary<int, Library> books = new Dictionary<int, Library>();
+    Queue<string> waitingList = new Queue<string>();
+    Stack<string> recentlyReturned = new Stack<string>();
 
-
-    static int x = 1;
-    static int id;
-    static string bookName;
-    static string authorName;
-    static int quantity;
-    static bool isBorrowed = false;
     void AddBooks()
     {
-
         for (int i = 0; i < 3; i++)
         {
+            Console.WriteLine("Enter Id:");
+            int id = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter the Id,bookName,AuthorName,quantity:");
-            id = Convert.ToInt32(Console.ReadLine());
-            bookName = Console.ReadLine();
-            authorName = Console.ReadLine();
-            quantity = 1;
+            Console.WriteLine("Enter Book Name:");
+            string name = Console.ReadLine();
 
-            keyValuePairs.Add(x, new Library(id, bookName, authorName, quantity, isBorrowed));
-            x++;
+            Console.WriteLine("Enter Author Name:");
+            string author = Console.ReadLine();
 
+            Console.WriteLine("Enter Quantity:");
+            int quantity = int.Parse(Console.ReadLine());
 
+            books[id] = new Library(id, name, author, quantity);
         }
-        foreach (var data1 in keyValuePairs)
-        {
-            Console.WriteLine($"{data1.Key}-{data1.Value.Id}-{data1.Value.AuthorName}-{data1.Value.BookName}");
-        }
-
-
     }
+
     void GetAllBooks()
     {
-        List<Library> libraries = new List<Library>();
-        for (int i = 0; i < 3; i++)
+        Console.WriteLine("\nAll Books:");
+        foreach (var book in books.Values)
         {
-            libraries.Add(new(bookName, authorName, quantity, isBorrowed));
-
-
-
-
+            Console.WriteLine($"{book.Id} - {book.BookName} - {book.AuthorName} - Qty: {book.Quantity}");
         }
-        foreach (var data in libraries)
-        {
-            Console.WriteLine($"{data.BookName}");
-        }
-
     }
-    void WaitingList()
+
+    void BorrowBook()
     {
-        Queue<string> library = new Queue<string>();
-        Console.WriteLine("Enter the bookName to withdraw:");
-        string bookName = Console.ReadLine();
+        Console.WriteLine("Enter Book Id to borrow:");
+        int id = int.Parse(Console.ReadLine());
 
-        if (library1.BookName == bookName)
+        if (books.ContainsKey(id))
         {
+            var book = books[id];
 
-            if (quantity == 0)
+            if (book.Quantity > 0)
             {
-                isBorrowed = true;
-                Console.WriteLine("!unable to borrow:" + bookName);
-
+                book.Quantity--;
+                Console.WriteLine("Book borrowed successfully");
             }
-            else if (quantity < 0)
+            else
             {
-                throw new Exception("quantity cannot be negative");
+                Console.WriteLine("Book not available. Added to waiting list.");
+                waitingList.Enqueue(book.BookName);
             }
-            else if (quantity > 0)
-            {
-                quantity--;
-                isBorrowed = true;
-                library.Enqueue(bookName);
-                Console.WriteLine("Book has been borrowed");
-            }
-
-
         }
-
+        else
+        {
+            Console.WriteLine("Book not found");
+        }
     }
-    void ReturningBooks()
+
+    void ReturnBook()
     {
-        Stack<string> libraries1 = new Stack<string>();
-        Console.WriteLine("Enter the book you want ");
-        string bookName = Console.ReadLine();
-        if (library1.BookName == bookName)
+        Console.WriteLine("Enter Book Id to return:");
+        int id = int.Parse(Console.ReadLine());
+
+        if (books.ContainsKey(id))
         {
-            if (quantity == 0)
-            {
-                isBorrowed = true;
-                quantity++;
-                isBorrowed = false;
-                libraries1.Push(bookName);
-                Console.WriteLine("book has been returned");
+            var book = books[id];
+            book.Quantity++;
 
-            }
-            else if (quantity < 0)
-            {
-                throw new Exception("book qunatity cannot be negative");
-            }
-
-
+            recentlyReturned.Push(book.BookName);
+            Console.WriteLine("Book returned successfully");
         }
-        if (quantity > 0)
-        {
-            isBorrowed = false;
-            Console.WriteLine("book has not been borrowed");
-        }
-
-
     }
 
+    void ShowWaitingList()
+    {
+        Console.WriteLine("\nWaiting List:");
+        foreach (var item in waitingList)
+        {
+            Console.WriteLine(item);
+        }
+    }
+
+    void ShowRecentlyReturned()
+    {
+        Console.WriteLine("\nRecently Returned:");
+        foreach (var item in recentlyReturned)
+        {
+            Console.WriteLine(item);
+        }
+    }
 
     static void Main()
     {
-        LibraryMangementSysytem libraryMangementSysytem = new LibraryMangementSysytem();
-        libraryMangementSysytem.AddBooks();
-        libraryMangementSysytem.GetAllBooks();
-        libraryMangementSysytem.WaitingList();
-        libraryMangementSysytem.ReturningBooks();
+        var system = new LibraryManagementSystem();
 
+        system.AddBooks();
+        system.GetAllBooks();
 
+        system.BorrowBook();
+        system.ReturnBook();
 
-
+        system.ShowWaitingList();
+        system.ShowRecentlyReturned();
     }
-
-
 }

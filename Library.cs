@@ -19,55 +19,58 @@ library[0]
 library["C# Fundamentals"]
 */
 
-class Library
+namespace Library1
 {
-    private List<string> books = new List<string>();
-    public void AddMethod(string book)
+    public class Library
     {
-        books.Add(book);
-
-    }
-    public string this[int index]
-    {
-        get
+        private List<string> books = new List<string>();
+        public void AddMethod(string book)
         {
-            if (index >= 0 && index < books.Count)
+            books.Add(book);
+
+        }
+        public string this[int index]
+        {
+            get
             {
-                return books[index];
-            }
-            else
-            {
-                return "invalid index";
+                if (index >= 0 && index < books.Count)
+                {
+                    return books[index];
+                }
+                else
+                {
+                    return "invalid index";
+                }
             }
         }
-    }
-    public string this[string bookName]
-    {
-        get
+        public string this[string bookName]
         {
-            foreach (var obj in books)
+            get
             {
-                if (obj.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                foreach (var obj in books)
                 {
-                    return $"book found:{obj}";
+                    if (obj.Equals(bookName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return $"book found:{obj}";
+
+                    }
 
                 }
+                return "book not found";
 
             }
-            return "book not found";
+        }
+        static void Main()
+        {
+            Library library = new Library();
+            library.AddMethod("eng");
+            library.AddMethod("hindi");
+            library.AddMethod("math");
+
+            Console.WriteLine(library[0]);
+            Console.WriteLine(library["ramesh"]);
+
 
         }
-    }
-    static void Main()
-    {
-        Library library = new Library();
-        library.AddMethod("eng");
-        library.AddMethod("hindi");
-        library.AddMethod("math");
-
-        Console.WriteLine(library[0]);
-        Console.WriteLine(library["ramesh"]);
-
-
     }
 }
